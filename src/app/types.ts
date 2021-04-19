@@ -1,21 +1,21 @@
-export interface Poll extends PollForm{
-  id: number;
-  results: number[];
+export interface Poll extends PollForm {
+  id: number; // 12
+  results: number[]; // [0, 0, 0, 0, 5, 7, 2]
   voted: boolean;
 }
 
-export interface Voter{
-  id: string;
-  voted: number[];
+export interface PollForm {
+  question: string; // Which days of week you like most?
+  options: string[]; // ["Monday", "Tuesday", "Wednesday"....]
+  thumbnail: string; // https://image.png
 }
 
-export interface PollForm{
-  question: string;
-  options: string[];
-  thumbnail: string;
-}
-
-export interface PollVote{
+export interface PollVote {
   id: number;
   vote: number;
+}
+
+export interface Voter {
+  id: string; // 0xJHSADJH5412SXD
+  voted: number[]; // [12]
 }

@@ -1,34 +1,39 @@
 import { Component } from '@angular/core';
-import { PollService } from './poll-service/poll.service';
 import { Poll, PollForm, PollVote } from './types';
+import { PollService } from './poll-service/poll.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
   showForm = false;
-  activepoll: Poll = null;
+  activePoll: Poll = null;
+
   polls = this.ps.getPolls();
 
-  constructor(private ps: PollService){
+  constructor(private ps: PollService) {}
 
+  ngOnInit() {
+    this.ps.onEvent('PollCreated').subscribe(() => {
+      this.polls = this.ps.getPolls();
+    });
   }
 
-  setActivePoll(poll){
-    this.activepoll = null;
+  setActivePoll(poll) {
+    this.activePoll = null;
 
     setTimeout(() => {
-      this.activepoll = poll;
-    }, 100)
+      this.activePoll = poll;
+    }, 100);
   }
 
-  handlePollCreate(poll: PollForm){
+  handlePollCreate(poll: PollForm) {
     this.ps.createPoll(poll);
   }
 
-  handlePollVote(pollVoted: PollVote){
-    this.ps.vote(pollVoted.id,pollVoted.vote);
+  handlePollVote(pollVoted: PollVote) {
+    this.ps.vote(pollVoted.id, pollVoted.vote);
   }
 }
