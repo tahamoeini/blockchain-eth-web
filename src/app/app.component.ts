@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { PollService } from './poll-service/poll.service';
+import { Poll, PollForm, PollVote } from './types';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,27 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'blockchain';
+  showForm = false;
+  activepoll: Poll = null;
+  polls = this.ps.getPolls();
+
+  constructor(private ps: PollService){
+
+  }
+
+  setActivePoll(poll){
+    this.activepoll = null;
+
+    setTimeout(() => {
+      this.activepoll = poll;
+    }, 100)
+  }
+
+  handlePollCreate(poll: PollForm){
+    this.ps.createPoll(poll);
+  }
+
+  handlePollVote(pollVoted: PollVote){
+    this.ps.vote(pollVoted.id,pollVoted.vote);
+  }
 }
